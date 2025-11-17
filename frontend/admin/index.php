@@ -61,7 +61,7 @@ include __DIR__ . '/../includes/header.php';
 
 <?php if (!$school): ?>
     <div class="alert alert-warning">
-        Non hai ancora creato una scuola. <a href="/frontend/admin/school.php" style="color: #856404; font-weight: bold;">Crea la tua scuola ora</a>
+        Non hai ancora creato una scuola. <a href="<?php echo baseUrl('admin/school.php'); ?>" style="color: #856404; font-weight: bold;">Crea la tua scuola ora</a>
     </div>
 <?php else: ?>
 
@@ -114,7 +114,7 @@ include __DIR__ . '/../includes/header.php';
                     </p>
                 </div>
             </div>
-            <a href="/frontend/admin/school.php" class="btn btn-primary mt-2">Gestisci Scuola</a>
+            <a href="<?php echo baseUrl('admin/school.php'); ?>" class="btn btn-primary mt-2">Gestisci Scuola</a>
         </div>
     </div>
 
@@ -142,12 +142,12 @@ include __DIR__ . '/../includes/header.php';
                                     <td><?php echo htmlspecialchars($request['teacher_email']); ?></td>
                                     <td><?php echo formatDateTime($request['created_at']); ?></td>
                                     <td>
-                                        <form method="POST" action="/frontend/admin/requests.php" style="display: inline;">
+                                        <form method="POST" action="<?php echo baseUrl('admin/requests.php'); ?>" style="display: inline;">
                                             <input type="hidden" name="action" value="approve">
                                             <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
                                             <button type="submit" class="btn btn-sm btn-success">Approva</button>
                                         </form>
-                                        <form method="POST" action="/frontend/admin/requests.php" style="display: inline;">
+                                        <form method="POST" action="<?php echo baseUrl('admin/requests.php'); ?>" style="display: inline;">
                                             <input type="hidden" name="action" value="reject">
                                             <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
                                             <button type="submit" class="btn btn-sm btn-danger">Rifiuta</button>
@@ -170,7 +170,7 @@ include __DIR__ . '/../includes/header.php';
                     <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍🏫</div>
                     <h4>Gestisci Docenti</h4>
                     <p>Visualizza e gestisci i docenti della scuola</p>
-                    <a href="/frontend/admin/teachers.php" class="btn btn-primary">Vai ai Docenti</a>
+                    <a href="<?php echo baseUrl('admin/teachers.php'); ?>" class="btn btn-primary">Vai ai Docenti</a>
                 </div>
             </div>
         </div>
@@ -180,7 +180,7 @@ include __DIR__ . '/../includes/header.php';
                     <div style="font-size: 3rem; margin-bottom: 1rem;">🎓</div>
                     <h4>Gestisci Studenti</h4>
                     <p>Visualizza la lista degli studenti</p>
-                    <a href="/frontend/admin/students.php" class="btn btn-primary">Vai agli Studenti</a>
+                    <a href="<?php echo baseUrl('admin/students.php'); ?>" class="btn btn-primary">Vai agli Studenti</a>
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@ include __DIR__ . '/../includes/header.php';
                     <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
                     <h4>Calendario Lezioni</h4>
                     <p>Visualizza tutte le lezioni programmate</p>
-                    <a href="/frontend/admin/lessons.php" class="btn btn-primary">Vai al Calendario</a>
+                    <a href="<?php echo baseUrl('admin/lessons.php'); ?>" class="btn btn-primary">Vai al Calendario</a>
                 </div>
             </div>
         </div>

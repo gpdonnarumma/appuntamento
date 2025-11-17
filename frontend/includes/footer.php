@@ -1,6 +1,6 @@
         </div>
     </main>
 
-    <script src="/frontend/assets/js/common.js"></script>
+    <script src="<?php echo assetUrl('js/common.js'); ?>"></script>
 </body>
 </html>

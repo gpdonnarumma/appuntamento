@@ -5,7 +5,7 @@
  */
 
 if (!isLoggedIn()) {
-    header('Location: /frontend/index.php');
+    header('Location: ' . baseUrl('index.php'));
     exit;
 }
 
@@ -38,8 +38,8 @@ $errorMessage = getErrorMessage();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle ?? APP_NAME; ?></title>
-    <link rel="stylesheet" href="/frontend/assets/css/common.css">
-    <link rel="stylesheet" href="/frontend/assets/css/<?php echo $roleCss; ?>">
+    <link rel="stylesheet" href="<?php echo assetUrl('css/common.css'); ?>">
+    <link rel="stylesheet" href="<?php echo assetUrl('css/' . $roleCss); ?>">
 </head>
 <body>
     <header class="header">
@@ -51,27 +51,27 @@ $errorMessage = getErrorMessage();
 
             <ul class="nav-menu">
                 <?php if ($role === ROLE_ADMIN): ?>
-                    <li><a href="/frontend/admin/index.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>">Dashboard</a></li>
-                    <li><a href="/frontend/admin/school.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'school.php' ? 'active' : ''; ?>">Scuola</a></li>
-                    <li><a href="/frontend/admin/teachers.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'teachers.php' ? 'active' : ''; ?>">Docenti</a></li>
-                    <li><a href="/frontend/admin/students.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'students.php' ? 'active' : ''; ?>">Studenti</a></li>
-                    <li><a href="/frontend/admin/lessons.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'lessons.php' ? 'active' : ''; ?>">Lezioni</a></li>
-                    <li><a href="/frontend/admin/requests.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'requests.php' ? 'active' : ''; ?>">Richieste</a></li>
+                    <li><a href="<?php echo baseUrl('admin/index.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>">Dashboard</a></li>
+                    <li><a href="<?php echo baseUrl('admin/school.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'school.php' ? 'active' : ''; ?>">Scuola</a></li>
+                    <li><a href="<?php echo baseUrl('admin/teachers.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'teachers.php' ? 'active' : ''; ?>">Docenti</a></li>
+                    <li><a href="<?php echo baseUrl('admin/students.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'students.php' ? 'active' : ''; ?>">Studenti</a></li>
+                    <li><a href="<?php echo baseUrl('admin/lessons.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'lessons.php' ? 'active' : ''; ?>">Lezioni</a></li>
+                    <li><a href="<?php echo baseUrl('admin/requests.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'requests.php' ? 'active' : ''; ?>">Richieste</a></li>
                 <?php elseif ($role === ROLE_TEACHER): ?>
-                    <li><a href="/frontend/teacher/index.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>">Dashboard</a></li>
-                    <li><a href="/frontend/teacher/courses.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'courses.php' ? 'active' : ''; ?>">Corsi</a></li>
-                    <li><a href="/frontend/teacher/lessons.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'lessons.php' ? 'active' : ''; ?>">Lezioni</a></li>
-                    <li><a href="/frontend/teacher/students.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'students.php' ? 'active' : ''; ?>">Studenti</a></li>
-                    <li><a href="/frontend/teacher/requests.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'requests.php' ? 'active' : ''; ?>">Richieste</a></li>
-                    <li><a href="/frontend/teacher/schools.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'schools.php' ? 'active' : ''; ?>">Scuole</a></li>
-                    <li><a href="/frontend/teacher/profile.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'active' : ''; ?>">Profilo</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/index.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>">Dashboard</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'courses.php' ? 'active' : ''; ?>">Corsi</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'lessons.php' ? 'active' : ''; ?>">Lezioni</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/students.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'students.php' ? 'active' : ''; ?>">Studenti</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/requests.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'requests.php' ? 'active' : ''; ?>">Richieste</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/schools.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'schools.php' ? 'active' : ''; ?>">Scuole</a></li>
+                    <li><a href="<?php echo baseUrl('teacher/profile.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'active' : ''; ?>">Profilo</a></li>
                 <?php elseif ($role === ROLE_STUDENT): ?>
-                    <li><a href="/frontend/student/index.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>">Dashboard</a></li>
-                    <li><a href="/frontend/student/courses.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'courses.php' ? 'active' : ''; ?>">I Miei Corsi</a></li>
-                    <li><a href="/frontend/student/search.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'search.php' ? 'active' : ''; ?>">Cerca Docente</a></li>
-                    <li><a href="/frontend/student/calendar.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'calendar.php' ? 'active' : ''; ?>">Calendario</a></li>
-                    <li><a href="/frontend/student/notifications.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'notifications.php' ? 'active' : ''; ?>">Notifiche</a></li>
-                    <li><a href="/frontend/student/profile.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'active' : ''; ?>">Profilo</a></li>
+                    <li><a href="<?php echo baseUrl('student/index.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>">Dashboard</a></li>
+                    <li><a href="<?php echo baseUrl('student/courses.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'courses.php' ? 'active' : ''; ?>">I Miei Corsi</a></li>
+                    <li><a href="<?php echo baseUrl('student/search.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'search.php' ? 'active' : ''; ?>">Cerca Docente</a></li>
+                    <li><a href="<?php echo baseUrl('student/calendar.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'calendar.php' ? 'active' : ''; ?>">Calendario</a></li>
+                    <li><a href="<?php echo baseUrl('student/notifications.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'notifications.php' ? 'active' : ''; ?>">Notifiche</a></li>
+                    <li><a href="<?php echo baseUrl('student/profile.php'); ?>" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'profile.php' ? 'active' : ''; ?>">Profilo</a></li>
                 <?php endif; ?>
 
                 <li>
@@ -90,7 +90,7 @@ $errorMessage = getErrorMessage();
                     </div>
                 </li>
 
-                <li><a href="/frontend/logout.php" class="nav-link">Esci</a></li>
+                <li><a href="<?php echo baseUrl('logout.php'); ?>" class="nav-link">Esci</a></li>
             </ul>
         </nav>
     </header>
