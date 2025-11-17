@@ -100,12 +100,12 @@ include __DIR__ . '/../includes/header.php';
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">📚 I Miei Corsi</h3>
-        <a href="/frontend/student/search.php" class="btn btn-sm btn-primary">Cerca Nuovo Docente</a>
+        <a href="<?php echo baseUrl('student/search.php'); ?>" class="btn btn-sm btn-primary">Cerca Nuovo Docente</a>
     </div>
     <div class="card-body">
         <?php if (empty($courses)): ?>
             <p class="text-center" style="padding: 2rem; color: #666;">
-                Non sei ancora iscritto a nessun corso. <a href="/frontend/student/search.php">Cerca un docente</a> per iniziare!
+                Non sei ancora iscritto a nessun corso. <a href="<?php echo baseUrl('student/search.php'); ?>">Cerca un docente</a> per iniziare!
             </p>
         <?php else: ?>
             <div class="row">
@@ -141,7 +141,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">📅 Prossime Lezioni</h3>
-            <a href="/frontend/student/calendar.php" class="btn btn-sm btn-primary">Visualizza Calendario</a>
+            <a href="<?php echo baseUrl('student/calendar.php'); ?>" class="btn btn-sm btn-primary">Visualizza Calendario</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -173,7 +173,7 @@ include __DIR__ . '/../includes/header.php';
             </div>
             <?php if (count($upcomingLessons) > 5): ?>
                 <div class="text-center mt-2">
-                    <a href="/frontend/student/calendar.php" class="btn btn-outline">Visualizza Tutte le Lezioni</a>
+                    <a href="<?php echo baseUrl('student/calendar.php'); ?>" class="btn btn-outline">Visualizza Tutte le Lezioni</a>
                 </div>
             <?php endif; ?>
         </div>
@@ -188,7 +188,7 @@ include __DIR__ . '/../includes/header.php';
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
                 <h4>Cerca Docente</h4>
                 <p>Trova nuovi corsi a cui iscriverti</p>
-                <a href="/frontend/student/search.php" class="btn btn-primary">Cerca</a>
+                <a href="<?php echo baseUrl('student/search.php'); ?>" class="btn btn-primary">Cerca</a>
             </div>
         </div>
     </div>
@@ -198,7 +198,7 @@ include __DIR__ . '/../includes/header.php';
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
                 <h4>Calendario</h4>
                 <p>Visualizza tutte le tue lezioni</p>
-                <a href="/frontend/student/calendar.php" class="btn btn-primary">Vai al Calendario</a>
+                <a href="<?php echo baseUrl('student/calendar.php'); ?>" class="btn btn-primary">Vai al Calendario</a>
             </div>
         </div>
     </div>
@@ -208,7 +208,7 @@ include __DIR__ . '/../includes/header.php';
                 <div style="font-size: 3rem; margin-bottom: 1rem;">⚙️</div>
                 <h4>Impostazioni</h4>
                 <p>Gestisci il tuo profilo</p>
-                <a href="/frontend/student/profile.php" class="btn btn-primary">Vai al Profilo</a>
+                <a href="<?php echo baseUrl('student/profile.php'); ?>" class="btn btn-primary">Vai al Profilo</a>
             </div>
         </div>
     </div>

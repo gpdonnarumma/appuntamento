@@ -12,13 +12,13 @@ if (isLoggedIn()) {
     $role = getUserRole();
     switch ($role) {
         case ROLE_ADMIN:
-            header('Location: /frontend/admin/index.php');
+            header('Location: ' . baseUrl('admin/index.php'));
             break;
         case ROLE_TEACHER:
-            header('Location: /frontend/teacher/index.php');
+            header('Location: ' . baseUrl('teacher/index.php'));
             break;
         case ROLE_STUDENT:
-            header('Location: /frontend/student/index.php');
+            header('Location: ' . baseUrl('student/index.php'));
             break;
     }
     exit;
@@ -89,13 +89,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirect to appropriate dashboard
             switch ($userType) {
                 case ROLE_ADMIN:
-                    header('Location: /frontend/admin/index.php');
+                    header('Location: ' . baseUrl('admin/index.php'));
                     break;
                 case ROLE_TEACHER:
-                    header('Location: /frontend/teacher/index.php');
+                    header('Location: ' . baseUrl('teacher/index.php'));
                     break;
                 case ROLE_STUDENT:
-                    header('Location: /frontend/student/index.php');
+                    header('Location: ' . baseUrl('student/index.php'));
                     break;
             }
             exit;
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo APP_NAME; ?> - Registrazione</title>
-    <link rel="stylesheet" href="/frontend/assets/css/common.css">
+    <link rel="stylesheet" href="<?php echo assetUrl('css/common.css'); ?>">
     <style>
         body {
             display: flex;
@@ -347,11 +347,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <div class="login-link">
-            Hai già un account? <a href="/frontend/index.php">Accedi</a>
+            Hai già un account? <a href="<?php echo baseUrl('index.php'); ?>">Accedi</a>
         </div>
     </div>
 
-    <script src="/frontend/assets/js/common.js"></script>
+    <script src="<?php echo assetUrl('js/common.js'); ?>"></script>
     <script>
         function selectRole(role) {
             // Remove all selected classes

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['course_id'])) {
         setErrorMessage($result['message']);
     }
 
-    header('Location: /frontend/student/search.php');
+    header('Location: ' . baseUrl('student/search.php'));
     exit;
 }
 
