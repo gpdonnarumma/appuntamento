@@ -1,0 +1,33 @@
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Set base directory
+    RewriteBase /backend/
+
+    # Allow CORS
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+    # Handle OPTIONS requests
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+
+# PHP Settings
+<IfModule mod_php7.c>
+    php_flag display_errors On
+    php_value error_reporting E_ALL
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "\.(sql|db|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
