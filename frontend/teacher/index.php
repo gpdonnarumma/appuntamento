@@ -108,12 +108,12 @@ include __DIR__ . '/../includes/header.php';
                                 <td><?php echo htmlspecialchars($request['course_name']); ?></td>
                                 <td><?php echo formatDateTime($request['created_at']); ?></td>
                                 <td>
-                                    <form method="POST" action="/frontend/teacher/requests.php" style="display: inline;">
+                                    <form method="POST" action="<?php echo baseUrl('teacher/requests.php'); ?>" style="display: inline;">
                                         <input type="hidden" name="action" value="approve">
                                         <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
                                         <button type="submit" class="btn btn-sm btn-success">Approva</button>
                                     </form>
-                                    <form method="POST" action="/frontend/teacher/requests.php" style="display: inline;">
+                                    <form method="POST" action="<?php echo baseUrl('teacher/requests.php'); ?>" style="display: inline;">
                                         <input type="hidden" name="action" value="reject">
                                         <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
                                         <button type="submit" class="btn btn-sm btn-danger">Rifiuta</button>
@@ -132,12 +132,12 @@ include __DIR__ . '/../includes/header.php';
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">📚 I Tuoi Corsi</h3>
-        <a href="/frontend/teacher/courses.php" class="btn btn-sm btn-primary">Gestisci Corsi</a>
+        <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-sm btn-primary">Gestisci Corsi</a>
     </div>
     <div class="card-body">
         <?php if (empty($courses)): ?>
             <p class="text-center" style="padding: 2rem; color: #666;">
-                Non hai ancora creato corsi. <a href="/frontend/teacher/courses.php">Crea il tuo primo corso</a>
+                Non hai ancora creato corsi. <a href="<?php echo baseUrl('teacher/courses.php'); ?>">Crea il tuo primo corso</a>
             </p>
         <?php else: ?>
             <div class="row">
@@ -151,7 +151,7 @@ include __DIR__ . '/../includes/header.php';
                                     <span class="badge badge-teacher">
                                         <?php echo $course['enrolled_students'] ?? 0; ?> studenti
                                     </span>
-                                    <a href="/frontend/teacher/courses.php?id=<?php echo $course['id']; ?>" class="btn btn-sm btn-primary">
+                                    <a href="<?php echo baseUrl('teacher/courses.php?id=' . $course['id']); ?>" class="btn btn-sm btn-primary">
                                         Dettagli
                                     </a>
                                 </div>
@@ -172,7 +172,7 @@ include __DIR__ . '/../includes/header.php';
                 <div style="font-size: 3rem; margin-bottom: 1rem;">➕</div>
                 <h4>Crea Lezione</h4>
                 <p>Programma una nuova lezione</p>
-                <a href="/frontend/teacher/lessons.php?action=create" class="btn btn-primary">Crea Lezione</a>
+                <a href="<?php echo baseUrl('teacher/lessons.php?action=create'); ?>" class="btn btn-primary">Crea Lezione</a>
             </div>
         </div>
     </div>
@@ -182,7 +182,7 @@ include __DIR__ . '/../includes/header.php';
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
                 <h4>Calendario</h4>
                 <p>Visualizza tutte le lezioni</p>
-                <a href="/frontend/teacher/lessons.php" class="btn btn-primary">Vai al Calendario</a>
+                <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-primary">Vai al Calendario</a>
             </div>
         </div>
     </div>
@@ -192,7 +192,7 @@ include __DIR__ . '/../includes/header.php';
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🎓</div>
                 <h4>Studenti</h4>
                 <p>Visualizza i tuoi studenti</p>
-                <a href="/frontend/teacher/students.php" class="btn btn-primary">Vai agli Studenti</a>
+                <a href="<?php echo baseUrl('teacher/students.php'); ?>" class="btn btn-primary">Vai agli Studenti</a>
             </div>
         </div>
     </div>

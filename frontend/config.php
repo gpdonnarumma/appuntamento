@@ -19,6 +19,38 @@ define('APP_VERSION', '1.0.0');
 // Session timeout (7 days - same as JWT)
 define('SESSION_TIMEOUT', 7 * 24 * 60 * 60);
 
+/**
+ * BASE PATH CONFIGURATION
+ * Auto-detect base path or set manually
+ */
+
+// Option 1: Auto-detect (recommended)
+// Assumes frontend folder structure: frontend/index.php, frontend/admin/, etc.
+$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+// Remove /admin, /teacher, /student if present
+$scriptPath = preg_replace('#/(admin|teacher|student)$#', '', $scriptPath);
+define('BASE_PATH', $scriptPath);
+
+// Option 2: Manual override (uncomment to use)
+// define('BASE_PATH', '/frontend');  // For http://example.com/frontend/
+// define('BASE_PATH', '');           // For http://example.com/ (root)
+
+/**
+ * Get base URL for a path
+ */
+function baseUrl($path = '') {
+    $path = ltrim($path, '/');
+    return BASE_PATH . '/' . $path;
+}
+
+/**
+ * Get asset URL (for CSS, JS, images)
+ */
+function assetUrl($path) {
+    $path = ltrim($path, '/');
+    return BASE_PATH . '/assets/' . $path;
+}
+
 // User roles
 define('ROLE_ADMIN', 'admin');
 define('ROLE_TEACHER', 'teacher');
@@ -78,7 +110,7 @@ function hasRole($role) {
  */
 function requireLogin() {
     if (!isLoggedIn()) {
-        header('Location: /frontend/index.php');
+        header('Location: ' . baseUrl('index.php'));
         exit;
     }
 }
@@ -89,7 +121,7 @@ function requireLogin() {
 function requireRole($role) {
     requireLogin();
     if (!hasRole($role)) {
-        header('Location: /frontend/index.php');
+        header('Location: ' . baseUrl('index.php'));
         exit;
     }
 }
@@ -99,7 +131,7 @@ function requireRole($role) {
  */
 function logout() {
     session_destroy();
-    header('Location: /frontend/index.php');
+    header('Location: ' . baseUrl('index.php'));
     exit;
 }
 
