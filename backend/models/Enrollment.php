@@ -369,4 +369,28 @@ class Enrollment {
             throw new Exception("Error fetching pending requests: " . $e->getMessage());
         }
     }
+
+    /**
+     * Get enrolled students for a course
+     */
+    public function getEnrollmentsByCourse($courseId) {
+        try {
+            $stmt = $this->db->prepare("
+                SELECT ce.*,
+                       s.first_name as student_first_name,
+                       s.last_name as student_last_name,
+                       s.email as student_email,
+                       s.unique_id as student_unique_id,
+                       s.birth_date as student_birth_date
+                FROM course_enrollments ce
+                INNER JOIN users s ON ce.student_id = s.id
+                WHERE ce.course_id = ?
+                ORDER BY ce.enrolled_at DESC
+            ");
+            $stmt->execute([$courseId]);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching course enrollments: " . $e->getMessage());
+        }
+    }
 }
