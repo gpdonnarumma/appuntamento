@@ -76,12 +76,12 @@ include __DIR__ . '/../includes/header.php';
         <div class="d-flex gap-2 align-items-center">
             <label style="margin: 0; font-weight: 600;">Filtra per corso:</label>
             <a href="<?php echo baseUrl('teacher/students.php'); ?>"
-               class="btn btn-sm <?php echo !$filterCourseId ? 'btn-primary' : 'btn-outline'; ?>">
+               class="btn btn-sm <?php echo !$filterCourseId ? 'btn-teacher' : 'btn-outline-secondary'; ?>">
                 📚 Tutti i Corsi (<?php echo count($allStudents); ?>)
             </a>
             <?php foreach ($courses as $course): ?>
                 <a href="<?php echo baseUrl('teacher/students.php?course=' . $course['id']); ?>"
-                   class="btn btn-sm <?php echo $filterCourseId == $course['id'] ? 'btn-primary' : 'btn-outline'; ?>">
+                   class="btn btn-sm <?php echo $filterCourseId == $course['id'] ? 'btn-teacher' : 'btn-outline-secondary'; ?>">
                     <?php echo htmlspecialchars($course['course_name']); ?>
                     (<?php echo count($studentsByCourse[$course['id']] ?? []); ?>)
                 </a>
@@ -112,7 +112,7 @@ include __DIR__ . '/../includes/header.php';
         <?php else: ?>
             <div class="row">
                 <?php foreach ($displayStudents as $student): ?>
-                    <div class="col-6" style="margin-bottom: 1.5rem;">
+                    <div class="col-md-6 col-lg-4" style="margin-bottom: 1.5rem;">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
@@ -145,10 +145,10 @@ include __DIR__ . '/../includes/header.php';
 
                                 <div class="d-flex gap-2" style="margin-top: 1rem;">
                                     <a href="<?php echo baseUrl('teacher/lessons.php?student=' . $student['id']); ?>"
-                                       class="btn btn-sm btn-primary" style="flex: 1;">
+                                       class="btn btn-sm btn-teacher" style="flex: 1;">
                                         📅 Visualizza Lezioni
                                     </a>
-                                    <button class="btn btn-sm btn-outline" onclick="copyToClipboard('<?php echo htmlspecialchars($student['email']); ?>')">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('<?php echo htmlspecialchars($student['email']); ?>')">
                                         📋 Copia Email
                                     </button>
                                 </div>
@@ -162,52 +162,36 @@ include __DIR__ . '/../includes/header.php';
 </div>
 
 <!-- Summary Stats -->
-<div class="row">
-    <div class="col-3">
-        <div class="card">
-            <div class="card-body text-center">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">👥</div>
-                <h3 style="margin: 0;"><?php echo count($allStudents); ?></h3>
-                <p style="color: #666; margin: 0.5rem 0 0 0;">Studenti Totali</p>
-            </div>
-        </div>
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value"><?php echo count($allStudents); ?></div>
+        <div class="stat-label">Studenti Totali</div>
     </div>
-    <div class="col-3">
-        <div class="card">
-            <div class="card-body text-center">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
-                <h3 style="margin: 0;"><?php echo count($courses); ?></h3>
-                <p style="color: #666; margin: 0.5rem 0 0 0;">Corsi Attivi</p>
-            </div>
-        </div>
+    <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-value"><?php echo count($courses); ?></div>
+        <div class="stat-label">Corsi Attivi</div>
     </div>
-    <div class="col-3">
-        <div class="card">
-            <div class="card-body text-center">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📈</div>
-                <h3 style="margin: 0;">
-                    <?php echo count($courses) > 0 ? round(count($allStudents) / count($courses), 1) : 0; ?>
-                </h3>
-                <p style="color: #666; margin: 0.5rem 0 0 0;">Media Studenti/Corso</p>
-            </div>
+    <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value">
+            <?php echo count($courses) > 0 ? round(count($allStudents) / count($courses), 1) : 0; ?>
         </div>
+        <div class="stat-label">Media Studenti/Corso</div>
     </div>
-    <div class="col-3">
-        <div class="card">
-            <div class="card-body text-center">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎯</div>
-                <h3 style="margin: 0;">
-                    <?php
-                    $totalEnrollments = 0;
-                    foreach ($allStudents as $s) {
-                        $totalEnrollments += count($s['courses']);
-                    }
-                    echo $totalEnrollments;
-                    ?>
-                </h3>
-                <p style="color: #666; margin: 0.5rem 0 0 0;">Iscrizioni Totali</p>
-            </div>
+    <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value">
+            <?php
+            $totalEnrollments = 0;
+            foreach ($allStudents as $s) {
+                $totalEnrollments += count($s['courses']);
+            }
+            echo $totalEnrollments;
+            ?>
         </div>
+        <div class="stat-label">Iscrizioni Totali</div>
     </div>
 </div>
 

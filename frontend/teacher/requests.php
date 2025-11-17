@@ -75,7 +75,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="card-body" style="padding: 1rem;">
         <div class="d-flex gap-2">
             <a href="<?php echo baseUrl('teacher/requests.php?filter=pending'); ?>"
-               class="btn <?php echo $filter === 'pending' ? 'btn-primary' : 'btn-outline'; ?>">
+               class="btn <?php echo $filter === 'pending' ? 'btn-teacher' : 'btn-outline-secondary'; ?>">
                 ⏳ Pendenti
                 <?php
                 $pendingCount = count(array_filter($requests, function($r) { return $r['status'] === 'pending'; }));
@@ -83,15 +83,15 @@ include __DIR__ . '/../includes/header.php';
                 ?>
             </a>
             <a href="<?php echo baseUrl('teacher/requests.php?filter=approved'); ?>"
-               class="btn <?php echo $filter === 'approved' ? 'btn-primary' : 'btn-outline'; ?>">
+               class="btn <?php echo $filter === 'approved' ? 'btn-teacher' : 'btn-outline-secondary'; ?>">
                 ✅ Approvate
             </a>
             <a href="<?php echo baseUrl('teacher/requests.php?filter=rejected'); ?>"
-               class="btn <?php echo $filter === 'rejected' ? 'btn-primary' : 'btn-outline'; ?>">
+               class="btn <?php echo $filter === 'rejected' ? 'btn-teacher' : 'btn-outline-secondary'; ?>">
                 ❌ Rifiutate
             </a>
             <a href="<?php echo baseUrl('teacher/requests.php?filter=all'); ?>"
-               class="btn <?php echo $filter === 'all' ? 'btn-primary' : 'btn-outline'; ?>">
+               class="btn <?php echo $filter === 'all' ? 'btn-teacher' : 'btn-outline-secondary'; ?>">
                 📋 Tutte
             </a>
         </div>
@@ -126,7 +126,7 @@ include __DIR__ . '/../includes/header.php';
             </div>
         <?php else: ?>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Studente</th>
@@ -152,11 +152,11 @@ include __DIR__ . '/../includes/header.php';
                                 <td><?php echo formatDateTime($request['created_at']); ?></td>
                                 <td>
                                     <?php if ($request['status'] === 'pending'): ?>
-                                        <span class="badge" style="background: #ffc107; color: #000;">⏳ Pendente</span>
+                                        <span class="badge bg-warning text-dark">⏳ Pendente</span>
                                     <?php elseif ($request['status'] === 'approved'): ?>
-                                        <span class="badge" style="background: #28a745; color: #fff;">✅ Approvata</span>
+                                        <span class="badge bg-success text-white">✅ Approvata</span>
                                     <?php elseif ($request['status'] === 'rejected'): ?>
-                                        <span class="badge" style="background: #dc3545; color: #fff;">❌ Rifiutata</span>
+                                        <span class="badge bg-danger text-white">❌ Rifiutata</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -191,58 +191,42 @@ include __DIR__ . '/../includes/header.php';
 
 <!-- Summary Stats -->
 <?php if (!empty($courses)): ?>
-    <div class="row">
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⏳</div>
-                    <h3 style="margin: 0;">
-                        <?php echo count(array_filter($requests, function($r) { return $r['status'] === 'pending'; })); ?>
-                    </h3>
-                    <p style="color: #666; margin: 0.5rem 0 0 0;">Richieste Pendenti</p>
-                </div>
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-value">
+                <?php echo count(array_filter($requests, function($r) { return $r['status'] === 'pending'; })); ?>
             </div>
+            <div class="stat-label">Richieste Pendenti</div>
         </div>
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✅</div>
-                    <h3 style="margin: 0;">
-                        <?php
-                        $allRequests = apiGetEnrollmentRequests($user['id'], false);
-                        $allReqs = $allRequests['success'] ? $allRequests['data'] : [];
-                        echo count(array_filter($allReqs, function($r) { return $r['status'] === 'approved'; }));
-                        ?>
-                    </h3>
-                    <p style="color: #666; margin: 0.5rem 0 0 0;">Totale Approvate</p>
-                </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">
+                <?php
+                $allRequests = apiGetEnrollmentRequests($user['id'], false);
+                $allReqs = $allRequests['success'] ? $allRequests['data'] : [];
+                echo count(array_filter($allReqs, function($r) { return $r['status'] === 'approved'; }));
+                ?>
             </div>
+            <div class="stat-label">Totale Approvate</div>
         </div>
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📚</div>
-                    <h3 style="margin: 0;"><?php echo count($courses); ?></h3>
-                    <p style="color: #666; margin: 0.5rem 0 0 0;">Corsi Attivi</p>
-                </div>
-            </div>
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-value"><?php echo count($courses); ?></div>
+            <div class="stat-label">Corsi Attivi</div>
         </div>
-        <div class="col-3">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">👥</div>
-                    <h3 style="margin: 0;">
-                        <?php
-                        $totalStudents = 0;
-                        foreach ($courses as $c) {
-                            $totalStudents += $c['enrolled_students'] ?? 0;
-                        }
-                        echo $totalStudents;
-                        ?>
-                    </h3>
-                    <p style="color: #666; margin: 0.5rem 0 0 0;">Studenti Totali</p>
-                </div>
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-value">
+                <?php
+                $totalStudents = 0;
+                foreach ($courses as $c) {
+                    $totalStudents += $c['enrolled_students'] ?? 0;
+                }
+                echo $totalStudents;
+                ?>
             </div>
+            <div class="stat-label">Studenti Totali</div>
         </div>
     </div>
 <?php endif; ?>
