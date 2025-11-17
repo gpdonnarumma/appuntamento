@@ -1,17 +1,33 @@
 /**
- * Admin CSS - Blue/Navy Theme
+ * Admin CSS - Bootstrap Dark Theme
  * Specific styles for Administrator (School) role
  */
 
 :root {
-    --primary-color: #2C3E50;
-    --secondary-color: #3498DB;
-    --accent-color: #5DADE2;
+    --admin-primary: #0d6efd;
+    --admin-secondary: #6c757d;
+    --admin-accent: #0dcaf0;
+    --admin-dark: #212529;
+    --admin-dark-bg: #1a1d20;
+    --admin-card-bg: #2b3035;
+    --admin-border: #495057;
 }
 
+/* Dark Background */
+body {
+    background-color: var(--admin-dark-bg) !important;
+    color: #e9ecef;
+}
+
+.main-content {
+    background-color: var(--admin-dark-bg);
+}
+
+/* Header - Dark */
 .header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #1a1d20, #2b3035);
     color: white;
+    border-bottom: 1px solid var(--admin-border);
 }
 
 .logo {
@@ -28,15 +44,34 @@
 }
 
 .nav-link.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--admin-primary);
     color: white;
 }
 
 .user-info {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     color: white;
 }
 
+/* Cards - Dark */
+.card {
+    background-color: var(--admin-card-bg);
+    border: 1px solid var(--admin-border);
+    color: #e9ecef;
+}
+
+.card-header {
+    background-color: rgba(13, 110, 253, 0.1);
+    border-bottom: 1px solid var(--admin-border);
+    color: #e9ecef;
+}
+
+.card-title {
+    color: #e9ecef;
+    margin: 0;
+}
+
+/* Dashboard Stats */
 .dashboard-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -45,58 +80,246 @@
 }
 
 .stat-card {
-    background: white;
+    background: linear-gradient(135deg, var(--admin-card-bg), #343a40);
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid var(--admin-primary);
+    color: #e9ecef;
 }
 
 .stat-card.secondary {
-    border-left-color: var(--secondary-color);
+    border-left-color: var(--admin-secondary);
 }
 
 .stat-card.accent {
-    border-left-color: var(--accent-color);
+    border-left-color: var(--admin-accent);
 }
 
 .stat-value {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: #fff;
 }
 
 .stat-label {
-    color: #666;
+    color: #adb5bd;
     font-size: 1.1rem;
     margin-top: 0.5rem;
 }
 
 .stat-icon {
     font-size: 3rem;
-    color: var(--primary-color);
-    opacity: 0.3;
+    color: rgba(255, 255, 255, 0.2);
     float: right;
 }
 
+/* Page Header */
+.page-header {
+    color: #e9ecef;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.page-title {
+    color: #fff;
+}
+
+.page-subtitle {
+    color: #adb5bd;
+}
+
+/* Buttons */
 .btn-primary {
-    background: var(--primary-color);
+    background: var(--admin-primary);
+    border-color: var(--admin-primary);
 }
 
 .btn-primary:hover {
-    background: var(--secondary-color);
+    background: #0b5ed7;
+    border-color: #0b5ed7;
 }
 
 .btn-secondary {
-    background: var(--secondary-color);
+    background: var(--admin-secondary);
+    border-color: var(--admin-secondary);
 }
 
-.table th {
-    background: var(--primary-color);
+.btn-outline-primary {
+    color: var(--admin-primary);
+    border-color: var(--admin-primary);
+}
+
+.btn-outline-primary:hover {
+    background: var(--admin-primary);
     color: white;
 }
 
+.btn-outline-secondary {
+    color: var(--admin-secondary);
+    border-color: var(--admin-secondary);
+}
+
+.btn-outline-secondary:hover {
+    background: var(--admin-secondary);
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--admin-border);
+    color: #adb5bd;
+}
+
+.btn-outline:hover {
+    background: var(--admin-border);
+    color: #fff;
+}
+
+/* Tables */
+.table {
+    color: #e9ecef;
+    border-color: var(--admin-border);
+}
+
+.table thead th {
+    background: var(--admin-dark);
+    color: #fff;
+    border-color: var(--admin-border);
+}
+
+.table tbody tr {
+    border-color: var(--admin-border);
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.table-responsive {
+    background: transparent;
+}
+
+/* Forms */
+.form-control {
+    background-color: #343a40;
+    border: 1px solid var(--admin-border);
+    color: #e9ecef;
+}
+
+.form-control:focus {
+    background-color: #343a40;
+    border-color: var(--admin-primary);
+    color: #e9ecef;
+}
+
+.form-select {
+    background-color: #343a40;
+    border: 1px solid var(--admin-border);
+    color: #e9ecef;
+}
+
+.form-select:focus {
+    background-color: #343a40;
+    border-color: var(--admin-primary);
+    color: #e9ecef;
+}
+
+.form-label {
+    color: #e9ecef;
+}
+
+.form-text {
+    color: #adb5bd;
+}
+
+/* Badges */
 .badge-admin {
-    background: var(--primary-color);
+    background: var(--admin-primary);
     color: white;
+}
+
+.badge-secondary {
+    background: var(--admin-secondary);
+    color: white;
+}
+
+/* Alerts */
+.alert {
+    border: 1px solid var(--admin-border);
+}
+
+.alert-warning {
+    background-color: #664d03;
+    color: #ffecb5;
+    border-color: #997404;
+}
+
+.alert-success {
+    background-color: #0f5132;
+    color: #d1e7dd;
+    border-color: #146c43;
+}
+
+.alert-danger {
+    background-color: #842029;
+    color: #f8d7da;
+    border-color: #b02a37;
+}
+
+.alert-info {
+    background-color: #055160;
+    color: #cff4fc;
+    border-color: #087990;
+}
+
+/* List Groups */
+.list-group-item {
+    background-color: var(--admin-card-bg);
+    border: 1px solid var(--admin-border);
+    color: #e9ecef;
+}
+
+.list-group-item:hover {
+    background-color: #343a40;
+}
+
+/* Modal */
+.modal-content {
+    background-color: var(--admin-card-bg);
+    border: 1px solid var(--admin-border);
+    color: #e9ecef;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--admin-border);
+}
+
+/* Text Colors */
+.text-muted {
+    color: #adb5bd !important;
+}
+
+/* Links */
+a {
+    color: var(--admin-accent);
+}
+
+a:hover {
+    color: #3dd5f3;
+}
+
+/* Course Cards */
+.course-card {
+    background: var(--admin-card-bg);
+    border: 1px solid var(--admin-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }

@@ -331,3 +331,18 @@ function apiMarkNotificationRead($notificationId = null, $markAll = false) {
 
     return apiRequest('/notifications/mark_read.php', 'POST', $data);
 }
+
+// Alias for compatibility
+function apiMarkNotificationAsRead($notificationId) {
+    return apiMarkNotificationRead($notificationId, false);
+}
+
+function apiMarkAllNotificationsAsRead() {
+    return apiMarkNotificationRead(null, true);
+}
+
+function apiDeleteNotification($notificationId) {
+    return apiRequest('/notifications/delete.php', 'DELETE', [
+        'notification_id' => $notificationId
+    ]);
+}
