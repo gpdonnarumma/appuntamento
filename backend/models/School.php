@@ -331,4 +331,26 @@ class School {
             throw new Exception("Error checking teacher: " . $e->getMessage());
         }
     }
+
+    /**
+     * Get schools for a teacher
+     */
+    public function getTeacherSchools($teacherId) {
+        try {
+            $stmt = $this->db->prepare("
+                SELECT s.*, ts.joined_at,
+                       u.first_name as admin_first_name,
+                       u.last_name as admin_last_name
+                FROM schools s
+                INNER JOIN teacher_schools ts ON s.id = ts.school_id
+                INNER JOIN users u ON s.admin_id = u.id
+                WHERE ts.teacher_id = ? AND s.is_active = 1
+                ORDER BY s.school_name ASC
+            ");
+            $stmt->execute([$teacherId]);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching teacher schools: " . $e->getMessage());
+        }
+    }
 }
