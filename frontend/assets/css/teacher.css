@@ -1,0 +1,110 @@
+/**
+ * Teacher CSS - Green/Teal Theme
+ * Specific styles for Teacher (Docente) role
+ */
+
+:root {
+    --primary-color: #27AE60;
+    --secondary-color: #16A085;
+    --accent-color: #52BE80;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.logo {
+    color: white;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.user-info {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+
+.stat-card.secondary {
+    border-left-color: var(--secondary-color);
+}
+
+.stat-card.accent {
+    border-left-color: var(--accent-color);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+.stat-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.3;
+    float: right;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+}
+
+.table th {
+    background: var(--primary-color);
+    color: white;
+}
+
+.badge-teacher {
+    background: var(--primary-color);
+    color: white;
+}
+
+.course-card {
+    border-left: 4px solid var(--primary-color);
+}
+
+.lesson-card {
+    border-left: 4px solid var(--secondary-color);
+}
