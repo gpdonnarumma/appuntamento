@@ -178,7 +178,7 @@ include __DIR__ . '/../includes/header.php';
                                 name="course_id"
                                 class="form-control"
                                 required
-                                <?php echo $editLesson ? 'disabled' : 'onchange="this.form.submit()"'; ?>
+                                <?php echo $editLesson ? 'disabled' : 'onchange="if(this.value) window.location.href=\''.baseUrl('teacher/lessons.php').'?view=create&course=\' + this.value"'; ?>
                             >
                                 <option value="">Seleziona corso...</option>
                                 <?php foreach ($courses as $course): ?>
