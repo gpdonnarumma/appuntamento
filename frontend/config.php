@@ -29,8 +29,8 @@ define('SESSION_TIMEOUT', 7 * 24 * 60 * 60);
 $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
 // Remove /admin, /teacher, /student if present
 $scriptPath = preg_replace('#/(admin|teacher|student)$#', '', $scriptPath);
-define('BASE_PATH', $scriptPath);
-
+//define('BASE_PATH', $scriptPath);
+define ('BASE_PATH', "http://localhost:3000/");
 // Option 2: Manual override (uncomment to use)
 // define('BASE_PATH', '/frontend');  // For http://example.com/frontend/
 // define('BASE_PATH', '');           // For http://example.com/ (root)
