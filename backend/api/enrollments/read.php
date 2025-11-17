@@ -22,6 +22,27 @@ try {
 
     $enrollmentModel = new Enrollment();
 
+    // Get enrolled students for a course
+    if (isset($_GET['course_id'])) {
+        $courseId = $_GET['course_id'];
+
+        // Verify teacher owns the course
+        require_once __DIR__ . '/../../models/Course.php';
+        $courseModel = new Course();
+        $course = $courseModel->getById($courseId);
+
+        if (!$course) {
+            sendError('Course not found', 404);
+        }
+
+        if ($currentUser['user_type'] === 'teacher' && $course['teacher_id'] != $currentUser['user_id']) {
+            sendError('Insufficient permissions', 403);
+        }
+
+        $enrollments = $enrollmentModel->getEnrollmentsByCourse($courseId);
+        sendSuccess('Course enrollments retrieved successfully', $enrollments);
+    }
+
     // Get requests for teacher
     if (isset($_GET['teacher_id'])) {
         $teacherId = $_GET['teacher_id'];
@@ -40,7 +61,7 @@ try {
         sendSuccess('Enrollment requests retrieved successfully', $requests);
     }
 
-    sendError('Please provide teacher_id parameter', 400);
+    sendError('Please provide teacher_id or course_id parameter', 400);
 
 } catch (Exception $e) {
     sendError('Failed to retrieve enrollment requests: ' . $e->getMessage(), 500);

@@ -263,6 +263,10 @@ function apiRejectEnrollment($requestId) {
     ]);
 }
 
+function apiGetEnrollments($courseId) {
+    return apiRequest('/enrollments/read.php?course_id=' . $courseId);
+}
+
 // ============================================
 // TEACHER REQUESTS
 // ============================================
