@@ -38,7 +38,13 @@ $errorMessage = getErrorMessage();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle ?? APP_NAME; ?></title>
-    <link rel="stylesheet" href="<?php echo assetUrl('css/common.css'); ?>">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?php echo assetUrl('css/bootstrap-integration.css'); ?>">
     <link rel="stylesheet" href="<?php echo assetUrl('css/' . $roleCss); ?>">
 </head>
 <body>
@@ -95,18 +101,20 @@ $errorMessage = getErrorMessage();
         </nav>
     </header>
 
-    <main class="main-content">
+    <main class="main-content py-4">
         <div class="container">
             <?php if ($successMessage): ?>
-                <div class="alert alert-success alert-dismissible">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
                     <?php echo htmlspecialchars($successMessage); ?>
-                    <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>
 
             <?php if ($errorMessage): ?>
-                <div class="alert alert-error alert-dismissible">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     <?php echo htmlspecialchars($errorMessage); ?>
-                    <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>

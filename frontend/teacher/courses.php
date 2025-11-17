@@ -117,17 +117,17 @@ include __DIR__ . '/../includes/header.php';
         <div class="card-header">
             <h3 class="card-title"><?php echo htmlspecialchars($viewCourse['course_name']); ?></h3>
             <div>
-                <a href="<?php echo baseUrl('teacher/courses.php?edit=' . $viewCourse['id']); ?>" class="btn btn-sm btn-primary">✏️ Modifica</a>
-                <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-sm btn-outline">← Torna ai Corsi</a>
+                <a href="<?php echo baseUrl('teacher/courses.php?edit=' . $viewCourse['id']); ?>" class="btn btn-sm btn-teacher">✏️ Modifica</a>
+                <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-sm btn-outline-secondary">← Torna ai Corsi</a>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6">
                     <p><strong>Descrizione:</strong></p>
                     <p><?php echo nl2br(htmlspecialchars($viewCourse['description'] ?? 'Nessuna descrizione')); ?></p>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                     <p><strong>Studenti Iscritti:</strong> <?php echo count($courseStudents); ?></p>
                     <p><strong>Creato il:</strong> <?php echo formatDateTime($viewCourse['created_at']); ?></p>
                     <p><strong>Ultima Modifica:</strong> <?php echo formatDateTime($viewCourse['updated_at']); ?></p>
@@ -148,7 +148,7 @@ include __DIR__ . '/../includes/header.php';
                 </p>
             <?php else: ?>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>ID Studente</th>
@@ -182,7 +182,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="card">
         <div class="card-header">
             <h3 class="card-title"><?php echo $editCourse ? '✏️ Modifica Corso' : '➕ Crea Nuovo Corso'; ?></h3>
-            <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-sm btn-outline">← Annulla</a>
+            <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-sm btn-outline-secondary">← Annulla</a>
         </div>
         <div class="card-body">
             <form method="POST" action="">
@@ -191,7 +191,7 @@ include __DIR__ . '/../includes/header.php';
                     <input type="hidden" name="course_id" value="<?php echo $editCourse['id']; ?>">
                 <?php endif; ?>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="form-label" for="course_name">Nome Corso *</label>
                     <input
                         type="text"
@@ -202,10 +202,10 @@ include __DIR__ . '/../includes/header.php';
                         placeholder="Es: Corso di Pianoforte - Livello Base"
                         required
                     >
-                    <small class="form-text">Specifica lo strumento e il livello nel nome del corso.</small>
+                    <small class="form-text text-muted">Specifica lo strumento e il livello nel nome del corso.</small>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="form-label" for="description">Descrizione</label>
                     <textarea
                         id="description"
@@ -214,14 +214,14 @@ include __DIR__ . '/../includes/header.php';
                         rows="6"
                         placeholder="Descrivi il corso: strumento, livello richiesto, obiettivi, contenuti delle lezioni, prerequisiti..."
                     ><?php echo htmlspecialchars($editCourse['description'] ?? ''); ?></textarea>
-                    <small class="form-text">Una descrizione dettagliata aiuterà gli studenti a capire se il corso fa per loro.</small>
+                    <small class="form-text text-muted">Una descrizione dettagliata aiuterà gli studenti a capire se il corso fa per loro.</small>
                 </div>
 
                 <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-teacher">
                         <?php echo $editCourse ? '💾 Salva Modifiche' : '➕ Crea Corso'; ?>
                     </button>
-                    <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-outline">Annulla</a>
+                    <a href="<?php echo baseUrl('teacher/courses.php'); ?>" class="btn btn-outline-secondary">Annulla</a>
                 </div>
             </form>
         </div>
@@ -252,7 +252,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">I Tuoi Corsi (<?php echo count($courses); ?>)</h3>
-            <a href="<?php echo baseUrl('teacher/courses.php?view=create'); ?>" class="btn btn-sm btn-primary">➕ Nuovo Corso</a>
+            <a href="<?php echo baseUrl('teacher/courses.php?view=create'); ?>" class="btn btn-sm btn-teacher">➕ Nuovo Corso</a>
         </div>
         <div class="card-body">
             <?php if (empty($courses)): ?>
@@ -260,12 +260,12 @@ include __DIR__ . '/../includes/header.php';
                     <div style="font-size: 4rem; margin-bottom: 1rem;">📚</div>
                     <h3>Non hai ancora creato corsi</h3>
                     <p style="color: #666; margin: 1rem 0;">Crea il tuo primo corso per iniziare ad accettare studenti.</p>
-                    <a href="<?php echo baseUrl('teacher/courses.php?view=create'); ?>" class="btn btn-primary">➕ Crea il Primo Corso</a>
+                    <a href="<?php echo baseUrl('teacher/courses.php?view=create'); ?>" class="btn btn-teacher">➕ Crea il Primo Corso</a>
                 </div>
             <?php else: ?>
                 <div class="row">
                     <?php foreach ($courses as $course): ?>
-                        <div class="col-4">
+                        <div class="col-md-6 col-lg-4">
                             <div class="card course-card" style="margin-bottom: 1.5rem;">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -288,10 +288,10 @@ include __DIR__ . '/../includes/header.php';
                                     </div>
 
                                     <div class="d-flex gap-2" style="margin-top: 1rem;">
-                                        <a href="<?php echo baseUrl('teacher/courses.php?id=' . $course['id']); ?>" class="btn btn-sm btn-primary" style="flex: 1;">
+                                        <a href="<?php echo baseUrl('teacher/courses.php?id=' . $course['id']); ?>" class="btn btn-sm btn-teacher" style="flex: 1;">
                                             👁️ Dettagli
                                         </a>
-                                        <a href="<?php echo baseUrl('teacher/courses.php?edit=' . $course['id']); ?>" class="btn btn-sm btn-outline">
+                                        <a href="<?php echo baseUrl('teacher/courses.php?edit=' . $course['id']); ?>" class="btn btn-sm btn-outline-secondary">
                                             ✏️ Modifica
                                         </a>
                                     </div>
@@ -306,46 +306,34 @@ include __DIR__ . '/../includes/header.php';
 
     <!-- Quick Stats -->
     <?php if (!empty($courses)): ?>
-        <div class="row">
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
-                        <h3 style="margin: 0;"><?php echo count($courses); ?></h3>
-                        <p style="color: #666; margin: 0.5rem 0 0 0;">Corsi Totali</p>
-                    </div>
-                </div>
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-value"><?php echo count($courses); ?></div>
+                <div class="stat-label">Corsi Totali</div>
             </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">👥</div>
-                        <h3 style="margin: 0;">
-                            <?php
-                            $totalStudents = 0;
-                            foreach ($courses as $c) {
-                                $totalStudents += $c['enrolled_students'] ?? 0;
-                            }
-                            echo $totalStudents;
-                            ?>
-                        </h3>
-                        <p style="color: #666; margin: 0.5rem 0 0 0;">Studenti Totali</p>
-                    </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value">
+                    <?php
+                    $totalStudents = 0;
+                    foreach ($courses as $c) {
+                        $totalStudents += $c['enrolled_students'] ?? 0;
+                    }
+                    echo $totalStudents;
+                    ?>
                 </div>
+                <div class="stat-label">Studenti Totali</div>
             </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📈</div>
-                        <h3 style="margin: 0;">
-                            <?php
-                            $avg = count($courses) > 0 ? round($totalStudents / count($courses), 1) : 0;
-                            echo $avg;
-                            ?>
-                        </h3>
-                        <p style="color: #666; margin: 0.5rem 0 0 0;">Media Studenti/Corso</p>
-                    </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value">
+                    <?php
+                    $avg = count($courses) > 0 ? round($totalStudents / count($courses), 1) : 0;
+                    echo $avg;
+                    ?>
                 </div>
+                <div class="stat-label">Media Studenti/Corso</div>
             </div>
         </div>
     <?php endif; ?>

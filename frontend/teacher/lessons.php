@@ -160,7 +160,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="card">
         <div class="card-header">
             <h3 class="card-title"><?php echo $editLesson ? '✏️ Modifica Lezione' : '➕ Crea Nuova Lezione'; ?></h3>
-            <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-sm btn-outline">← Annulla</a>
+            <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-sm btn-outline-secondary">← Annulla</a>
         </div>
         <div class="card-body">
             <form method="POST" action="" id="lessonForm">
@@ -170,8 +170,8 @@ include __DIR__ . '/../includes/header.php';
                 <?php endif; ?>
 
                 <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="mb-3">
                             <label class="form-label" for="course_id">Corso *</label>
                             <select
                                 id="course_id"
@@ -190,8 +190,8 @@ include __DIR__ . '/../includes/header.php';
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group">
+                    <div class="col-md-6">
+                        <div class="mb-3">
                             <label class="form-label" for="student_id">Studente *</label>
                             <select
                                 id="student_id"
@@ -209,15 +209,15 @@ include __DIR__ . '/../includes/header.php';
                                 <?php endforeach; ?>
                             </select>
                             <?php if (empty($courseStudents) && !$editLesson): ?>
-                                <small class="form-text" style="color: #dc3545;">Seleziona prima un corso con studenti iscritti.</small>
+                                <small class="form-text text-danger">Seleziona prima un corso con studenti iscritti.</small>
                             <?php endif; ?>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
+                    <div class="col-md-4">
+                        <div class="mb-3">
                             <label class="form-label" for="lesson_date">Data Lezione *</label>
                             <input
                                 type="date"
@@ -230,8 +230,8 @@ include __DIR__ . '/../includes/header.php';
                             >
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
+                    <div class="col-md-4">
+                        <div class="mb-3">
                             <label class="form-label" for="start_time">Ora Inizio *</label>
                             <input
                                 type="time"
@@ -243,8 +243,8 @@ include __DIR__ . '/../includes/header.php';
                             >
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
+                    <div class="col-md-4">
+                        <div class="mb-3">
                             <label class="form-label" for="end_time">Ora Fine *</label>
                             <input
                                 type="time"
@@ -259,7 +259,7 @@ include __DIR__ . '/../includes/header.php';
                 </div>
 
                 <?php if (!$editLesson): ?>
-                    <div class="form-group" style="background: #f8f9ff; padding: 1rem; border-radius: 8px; border: 2px solid var(--teacher-primary);">
+                    <div class="mb-3" style="background: #f8f9ff; padding: 1rem; border-radius: 8px; border: 2px solid var(--teacher-primary);">
                         <label class="form-label">
                             <input type="checkbox" id="is_recurring" name="is_recurring" value="1" onchange="toggleRecurrence()">
                             🔄 Lezione Ricorrente
@@ -270,14 +270,14 @@ include __DIR__ . '/../includes/header.php';
                                 <option value="weekly">Settimanale (52 occorrenze)</option>
                                 <option value="monthly">Mensile (52 occorrenze)</option>
                             </select>
-                            <small class="form-text">
+                            <small class="form-text text-muted">
                                 ℹ️ Verrà creata automaticamente questa lezione più altre 52 occorrenze future con la stessa ora e durata.
                             </small>
                         </div>
                     </div>
                 <?php endif; ?>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="form-label" for="classroom">Aula/Luogo</label>
                     <input
                         type="text"
@@ -289,7 +289,7 @@ include __DIR__ . '/../includes/header.php';
                     >
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="form-label" for="objectives">Obiettivi della Lezione</label>
                     <textarea
                         id="objectives"
@@ -300,7 +300,7 @@ include __DIR__ . '/../includes/header.php';
                     ><?php echo $editLesson ? htmlspecialchars($editLesson['objectives'] ?? '') : ''; ?></textarea>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label class="form-label" for="private_notes">Note Private</label>
                     <textarea
                         id="private_notes"
@@ -309,11 +309,11 @@ include __DIR__ . '/../includes/header.php';
                         rows="2"
                         placeholder="Note visibili solo a te..."
                     ><?php echo $editLesson ? htmlspecialchars($editLesson['private_notes'] ?? '') : ''; ?></textarea>
-                    <small class="form-text">Queste note sono visibili solo a te, non allo studente.</small>
+                    <small class="form-text text-muted">Queste note sono visibili solo a te, non allo studente.</small>
                 </div>
 
                 <?php if ($editLesson): ?>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="form-label" for="status">Stato</label>
                         <select id="status" name="status" class="form-control">
                             <option value="scheduled" <?php echo $editLesson['status'] === 'scheduled' ? 'selected' : ''; ?>>📅 Programmata</option>
@@ -324,10 +324,10 @@ include __DIR__ . '/../includes/header.php';
                 <?php endif; ?>
 
                 <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-teacher">
                         <?php echo $editLesson ? '💾 Salva Modifiche' : '➕ Crea Lezione'; ?>
                     </button>
-                    <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-outline">Annulla</a>
+                    <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-outline-secondary">Annulla</a>
                 </div>
             </form>
         </div>
@@ -390,13 +390,13 @@ include __DIR__ . '/../includes/header.php';
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Filtri</h3>
-            <a href="<?php echo baseUrl('teacher/lessons.php?view=create'); ?>" class="btn btn-sm btn-primary">➕ Nuova Lezione</a>
+            <a href="<?php echo baseUrl('teacher/lessons.php?view=create'); ?>" class="btn btn-sm btn-teacher">➕ Nuova Lezione</a>
         </div>
         <div class="card-body" style="padding: 1rem;">
             <form method="GET" action="" class="d-flex gap-2 align-items-end">
-                <div class="form-group" style="margin: 0; min-width: 200px;">
+                <div class="mb-0" style="min-width: 200px;">
                     <label class="form-label" for="filter_course" style="font-size: 0.9rem;">Corso:</label>
-                    <select id="filter_course" name="filter_course" class="form-control form-control-sm">
+                    <select id="filter_course" name="filter_course" class="form-select form-select-sm">
                         <option value="">Tutti i corsi</option>
                         <?php foreach ($courses as $course): ?>
                             <option value="<?php echo $course['id']; ?>" <?php echo $filterCourse == $course['id'] ? 'selected' : ''; ?>>
@@ -406,22 +406,22 @@ include __DIR__ . '/../includes/header.php';
                     </select>
                 </div>
 
-                <div class="form-group" style="margin: 0; min-width: 150px;">
+                <div class="mb-0" style="min-width: 150px;">
                     <label class="form-label" for="filter_status" style="font-size: 0.9rem;">Periodo:</label>
-                    <select id="filter_status" name="filter_status" class="form-control form-control-sm">
+                    <select id="filter_status" name="filter_status" class="form-select form-select-sm">
                         <option value="future" <?php echo $filterStatus === 'future' ? 'selected' : ''; ?>>Future</option>
                         <option value="past" <?php echo $filterStatus === 'past' ? 'selected' : ''; ?>>Passate</option>
                         <option value="all" <?php echo $filterStatus === 'all' ? 'selected' : ''; ?>>Tutte</option>
                     </select>
                 </div>
 
-                <div class="form-group" style="margin: 0;">
+                <div class="mb-0">
                     <label class="form-label" for="filter_date" style="font-size: 0.9rem;">Data specifica:</label>
                     <input type="date" id="filter_date" name="filter_date" class="form-control form-control-sm" value="<?php echo htmlspecialchars($filterDate ?? ''); ?>">
                 </div>
 
-                <button type="submit" class="btn btn-sm btn-primary">🔍 Filtra</button>
-                <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-sm btn-outline">✕ Reset</a>
+                <button type="submit" class="btn btn-sm btn-teacher">🔍 Filtra</button>
+                <a href="<?php echo baseUrl('teacher/lessons.php'); ?>" class="btn btn-sm btn-outline-secondary">✕ Reset</a>
             </form>
         </div>
     </div>
@@ -445,7 +445,7 @@ include __DIR__ . '/../includes/header.php';
                 </div>
             <?php else: ?>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Data</th>
@@ -463,7 +463,7 @@ include __DIR__ . '/../includes/header.php';
                                     <td>
                                         <strong><?php echo formatDate($lesson['lesson_date']); ?></strong>
                                         <?php if ($lesson['is_recurring'] && $lesson['parent_lesson_id'] === null): ?>
-                                            <br><span class="badge" style="background: #17a2b8; color: #fff; font-size: 0.75rem;">🔄 Ricorrente</span>
+                                            <br><span class="badge bg-info text-white" style="font-size: 0.75rem;">🔄 Ricorrente</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -475,15 +475,15 @@ include __DIR__ . '/../includes/header.php';
                                     <td><?php echo htmlspecialchars($lesson['classroom'] ?? '-'); ?></td>
                                     <td>
                                         <?php if ($lesson['status'] === 'scheduled'): ?>
-                                            <span class="badge" style="background: #17a2b8; color: #fff;">📅 Programmata</span>
+                                            <span class="badge bg-info text-white">📅 Programmata</span>
                                         <?php elseif ($lesson['status'] === 'completed'): ?>
-                                            <span class="badge" style="background: #28a745; color: #fff;">✅ Completata</span>
+                                            <span class="badge bg-success text-white">✅ Completata</span>
                                         <?php elseif ($lesson['status'] === 'cancelled'): ?>
-                                            <span class="badge" style="background: #dc3545; color: #fff;">❌ Cancellata</span>
+                                            <span class="badge bg-danger text-white">❌ Cancellata</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo baseUrl('teacher/lessons.php?edit=' . $lesson['id']); ?>" class="btn btn-sm btn-outline" title="Modifica">
+                                        <a href="<?php echo baseUrl('teacher/lessons.php?edit=' . $lesson['id']); ?>" class="btn btn-sm btn-outline-secondary" title="Modifica">
                                             ✏️
                                         </a>
                                     </td>

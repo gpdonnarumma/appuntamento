@@ -79,7 +79,7 @@ include __DIR__ . '/../includes/header.php';
         <?php else: ?>
             <div class="row">
                 <?php foreach ($mySchools as $school): ?>
-                    <div class="col-4">
+                    <div class="col-md-6 col-lg-4">
                         <div class="card" style="margin-bottom: 1rem;">
                             <div class="card-body">
                                 <h4 style="margin: 0 0 0.5rem 0;"><?php echo htmlspecialchars($school['school_name']); ?></h4>
@@ -109,7 +109,7 @@ include __DIR__ . '/../includes/header.php';
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Scuola</th>
@@ -127,7 +127,7 @@ include __DIR__ . '/../includes/header.php';
                                 <td><code><?php echo htmlspecialchars($request['school_unique_id']); ?></code></td>
                                 <td><?php echo formatDateTime($request['created_at']); ?></td>
                                 <td>
-                                    <span class="badge" style="background: #ffc107; color: #000;">⏳ In Attesa</span>
+                                    <span class="badge bg-warning text-dark">⏳ In Attesa</span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -148,7 +148,7 @@ include __DIR__ . '/../includes/header.php';
     </div>
     <div class="card-body">
         <form method="GET" action="">
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="form-label" for="search">Cerca per nome, città o ID univoco</label>
                 <div class="d-flex gap-2">
                     <input
@@ -159,9 +159,9 @@ include __DIR__ . '/../includes/header.php';
                         placeholder="Es: Conservatorio Milano, Roma, SC1234ABCD..."
                         value="<?php echo htmlspecialchars($searchQuery); ?>"
                     >
-                    <button type="submit" class="btn btn-primary">🔍 Cerca</button>
+                    <button type="submit" class="btn btn-teacher">🔍 Cerca</button>
                 </div>
-                <small class="form-text">
+                <small class="form-text text-muted">
                     Puoi cercare per nome della scuola, città o ID univoco. L'ID univoco è un codice che inizia con "SC" fornito dalla scuola.
                 </small>
             </div>
@@ -180,7 +180,7 @@ include __DIR__ . '/../includes/header.php';
                 </div>
             <?php else: ?>
                 <div class="table-responsive" style="margin-top: 1rem;">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Scuola</th>
@@ -208,7 +208,7 @@ include __DIR__ . '/../includes/header.php';
                                     <td>
                                         <form method="POST" action="" style="display: inline;">
                                             <input type="hidden" name="school_id" value="<?php echo $school['id']; ?>">
-                                            <button type="submit" class="btn btn-sm btn-primary"
+                                            <button type="submit" class="btn btn-sm btn-teacher"
                                                     onclick="return confirm('Vuoi richiedere di unirti a questa scuola?');">
                                                 ➕ Richiedi Affiliazione
                                             </button>
