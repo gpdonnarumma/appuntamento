@@ -299,6 +299,14 @@ function apiRejectTeacherRequest($requestId) {
     ]);
 }
 
+function apiGetTeacherSchools($teacherId) {
+    return apiRequest('/schools/read.php?teacher_id=' . $teacherId);
+}
+
+function apiGetTeacherPendingRequests($teacherId) {
+    return apiRequest('/teacher_requests/read.php?teacher_id=' . $teacherId);
+}
+
 // ============================================
 // NOTIFICATIONS
 // ============================================

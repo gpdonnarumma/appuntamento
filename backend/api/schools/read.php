@@ -24,6 +24,19 @@ try {
 
     $schoolModel = new School();
 
+    // Get schools for a teacher
+    if (isset($_GET['teacher_id'])) {
+        $teacherId = $_GET['teacher_id'];
+
+        // Permission check
+        if ($currentUser['user_type'] === 'teacher' && $teacherId != $currentUser['user_id']) {
+            sendError('Insufficient permissions', 403);
+        }
+
+        $schools = $schoolModel->getTeacherSchools($teacherId);
+        sendSuccess('Schools retrieved successfully', $schools);
+    }
+
     // Get by ID
     if (isset($_GET['id'])) {
         $school = $schoolModel->getById($_GET['id']);
