@@ -35,6 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $_SESSION['user'] = $result['data']['user'];
         $_SESSION['token'] = $result['data']['token'];
 
+        // Force session write before redirect to ensure token is saved
+        session_write_close();
+
         $role = $result['data']['user']['user_type'];
         switch ($role) {
             case ROLE_ADMIN:

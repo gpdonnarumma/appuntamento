@@ -7,6 +7,11 @@
     # RewriteBase /backend/                         # For root deployment
     # RewriteBase /appuntamento/backend/            # For subdirectory deployment
 
+    # CRITICAL: Preserve Authorization header (Apache strips it by default)
+    # This is required for JWT authentication to work
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
     # Allow CORS
     Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
