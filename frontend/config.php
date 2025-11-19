@@ -9,8 +9,30 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// API Backend URL
-define('API_BASE_URL', 'http://localhost:8000/api');
+/**
+ * BASE PATH CONFIGURATION
+ * Auto-detect base path for subdirectory deployment support
+ */
+
+// Auto-detect protocol and host
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+
+// Auto-detect base path from script location
+$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+// Remove role-specific subdirectories (admin, teacher, student) if present
+$basePath = preg_replace('#/(admin|teacher|student)$#', '', $scriptPath);
+
+// Define BASE_PATH (path only, no protocol/host)
+define('BASE_PATH', $basePath);
+
+// Auto-detect API URL (assumes backend is parallel to frontend)
+$apiPath = str_replace('/frontend', '/backend', $basePath);
+define('API_BASE_URL', $protocol . '://' . $host . $apiPath . '/api');
+
+// Manual override (uncomment and modify if auto-detection doesn't work)
+// define('BASE_PATH', '/appuntamento/frontend');  // For http://example.com/appuntamento/frontend/
+// define('API_BASE_URL', 'http://www.beesmart.cloud/appuntamento/backend/api');
 
 // Application settings
 define('APP_NAME', 'Music School Scheduler');
@@ -20,27 +42,17 @@ define('APP_VERSION', '1.0.0');
 define('SESSION_TIMEOUT', 7 * 24 * 60 * 60);
 
 /**
- * BASE PATH CONFIGURATION
- * Auto-detect base path or set manually
- */
-
-// Option 1: Auto-detect (recommended)
-// Assumes frontend folder structure: frontend/index.php, frontend/admin/, etc.
-$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
-// Remove /admin, /teacher, /student if present
-$scriptPath = preg_replace('#/(admin|teacher|student)$#', '', $scriptPath);
-//define('BASE_PATH', $scriptPath);
-define ('BASE_PATH', "http://localhost:3000/");
-// Option 2: Manual override (uncomment to use)
-// define('BASE_PATH', '/frontend');  // For http://example.com/frontend/
-// define('BASE_PATH', '');           // For http://example.com/ (root)
-
-/**
  * Get base URL for a path
  */
 function baseUrl($path = '') {
     $path = ltrim($path, '/');
-    return BASE_PATH . '/' . $path;
+    $base = rtrim(BASE_PATH, '/');
+
+    if (empty($path)) {
+        return $base ?: '/';
+    }
+
+    return $base . '/' . $path;
 }
 
 /**
@@ -48,7 +60,8 @@ function baseUrl($path = '') {
  */
 function assetUrl($path) {
     $path = ltrim($path, '/');
-    return BASE_PATH . '/assets/' . $path;
+    $base = rtrim(BASE_PATH, '/');
+    return $base . '/assets/' . $path;
 }
 
 // User roles

@@ -2,8 +2,10 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Set base directory
-    RewriteBase /backend/
+    # Set base directory (auto-detected by Apache if commented)
+    # Uncomment and modify if auto-detection doesn't work:
+    # RewriteBase /backend/                         # For root deployment
+    # RewriteBase /appuntamento/backend/            # For subdirectory deployment
 
     # Allow CORS
     Header set Access-Control-Allow-Origin "*"
