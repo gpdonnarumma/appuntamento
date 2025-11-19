@@ -97,8 +97,32 @@ $editLessonId = $_GET['edit'] ?? null;
 $coursesResult = apiGetCourse(null, $user['id']);
 $courses = $coursesResult['success'] ? $coursesResult['data'] : [];
 
-// Get students for selected course (for create form)
+// Get specific lesson if viewing/editing (do this BEFORE loading students)
+$viewLesson = null;
+$editLesson = null;
+
+if ($lessonId) {
+    $result = apiGetLesson($lessonId);
+    if ($result['success']) {
+        $viewLesson = $result['data'];
+    }
+}
+
+if ($editLessonId) {
+    $result = apiGetLesson($editLessonId);
+    if ($result['success']) {
+        $editLesson = $result['data'];
+    }
+}
+
+// Get students for selected course (for create/edit form)
 $selectedCourseId = $_GET['course'] ?? ($_POST['course_id'] ?? null);
+
+// If editing, use the lesson's course to load students
+if ($editLesson && !$selectedCourseId) {
+    $selectedCourseId = $editLesson['course_id'];
+}
+
 $courseStudents = [];
 if ($selectedCourseId) {
     $enrollmentsResult = apiGetEnrollments($selectedCourseId);
@@ -129,26 +153,13 @@ if ($filterStatus === 'future') {
 $lessonsResult = apiGetLessons($lessonsFilter);
 $lessons = $lessonsResult['success'] ? $lessonsResult['data'] : [];
 
-// Get specific lesson if viewing/editing
-$viewLesson = null;
-$editLesson = null;
-
-if ($lessonId) {
-    $result = apiGetLesson($lessonId);
-    if ($result['success']) {
-        $viewLesson = $result['data'];
-    }
-}
-
-if ($editLessonId) {
-    $result = apiGetLesson($editLessonId);
-    if ($result['success']) {
-        $editLesson = $result['data'];
-    }
-}
-
 include __DIR__ . '/../includes/header.php';
 ?>
+
+<!-- FullCalendar CSS/JS -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/it.global.min.js'></script>
 
 <div class="page-header">
     <h1 class="page-title">📅 Gestisci Lezioni</h1>
@@ -224,7 +235,13 @@ include __DIR__ . '/../includes/header.php';
                                 id="lesson_date"
                                 name="lesson_date"
                                 class="form-control"
-                                value="<?php echo $editLesson ? htmlspecialchars($editLesson['lesson_date']) : ''; ?>"
+                                value="<?php
+                                    if ($editLesson) {
+                                        echo htmlspecialchars($editLesson['lesson_date']);
+                                    } elseif (isset($_GET['date'])) {
+                                        echo htmlspecialchars($_GET['date']);
+                                    }
+                                ?>"
                                 min="<?php echo date('Y-m-d'); ?>"
                                 required
                             >
@@ -238,7 +255,13 @@ include __DIR__ . '/../includes/header.php';
                                 id="start_time"
                                 name="start_time"
                                 class="form-control"
-                                value="<?php echo $editLesson ? htmlspecialchars(substr($editLesson['start_time'], 0, 5)) : ''; ?>"
+                                value="<?php
+                                    if ($editLesson) {
+                                        echo htmlspecialchars(substr($editLesson['start_time'], 0, 5));
+                                    } elseif (isset($_GET['time'])) {
+                                        echo htmlspecialchars($_GET['time']);
+                                    }
+                                ?>"
                                 required
                             >
                         </div>
@@ -251,7 +274,16 @@ include __DIR__ . '/../includes/header.php';
                                 id="end_time"
                                 name="end_time"
                                 class="form-control"
-                                value="<?php echo $editLesson ? htmlspecialchars(substr($editLesson['end_time'], 0, 5)) : ''; ?>"
+                                value="<?php
+                                    if ($editLesson) {
+                                        echo htmlspecialchars(substr($editLesson['end_time'], 0, 5));
+                                    } elseif (isset($_GET['time'])) {
+                                        // Auto-calculate end time as start time + 1 hour
+                                        $startTime = $_GET['time'];
+                                        $endTime = date('H:i', strtotime($startTime . ' +1 hour'));
+                                        echo htmlspecialchars($endTime);
+                                    }
+                                ?>"
                                 required
                             >
                         </div>
@@ -386,6 +418,16 @@ include __DIR__ . '/../includes/header.php';
     <?php endif; ?>
 
 <?php else: ?>
+    <!-- Calendar View -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">📅 Calendario Lezioni</h3>
+        </div>
+        <div class="card-body">
+            <div id="calendar"></div>
+        </div>
+    </div>
+
     <!-- Lessons List -->
     <div class="card">
         <div class="card-header">
@@ -503,6 +545,87 @@ function toggleRecurrence() {
     const options = document.getElementById('recurrenceOptions');
     options.style.display = checkbox.checked ? 'block' : 'none';
 }
+
+// FullCalendar initialization
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+
+    if (calendarEl) {
+        // Convert PHP lessons to FullCalendar events
+        const events = <?php echo json_encode(array_map(function($lesson) {
+            return [
+                'id' => $lesson['id'],
+                'title' => ($lesson['student_first_name'] ?? '') . ' ' . ($lesson['student_last_name'] ?? '') . "\n" . ($lesson['course_name'] ?? ''),
+                'start' => $lesson['lesson_date'] . 'T' . $lesson['start_time'],
+                'end' => $lesson['lesson_date'] . 'T' . $lesson['end_time'],
+                'backgroundColor' => '#27AE60', // Teacher green color
+                'borderColor' => '#16A085',
+                'extendedProps' => [
+                    'student' => ($lesson['student_first_name'] ?? '') . ' ' . ($lesson['student_last_name'] ?? ''),
+                    'course' => $lesson['course_name'] ?? '',
+                    'classroom' => $lesson['classroom'] ?? '',
+                    'status' => $lesson['status'] ?? 'scheduled'
+                ]
+            ];
+        }, $lessons)); ?>;
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            locale: 'it',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            buttonText: {
+                today: 'Oggi',
+                month: 'Mese',
+                week: 'Settimana',
+                day: 'Giorno'
+            },
+            slotMinTime: '08:00:00',
+            slotMaxTime: '22:00:00',
+            allDaySlot: false,
+            weekends: true,
+            events: events,
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                meridiem: false
+            },
+
+            // Click on event - open edit
+            eventClick: function(info) {
+                const lessonId = info.event.id;
+                window.location.href = '<?php echo baseUrl('teacher/lessons.php'); ?>?edit=' + lessonId;
+            },
+
+            // Click on empty slot - create new lesson
+            dateClick: function(info) {
+                // Format: YYYY-MM-DD and HH:MM
+                const date = info.dateStr.split('T')[0];
+                const time = info.dateStr.split('T')[1]?.substring(0, 5) || '09:00';
+                window.location.href = '<?php echo baseUrl('teacher/lessons.php'); ?>?view=create&date=' + date + '&time=' + time;
+            },
+
+            // Style events
+            eventContent: function(arg) {
+                let html = '<div class="fc-event-main-frame">';
+                html += '<div class="fc-event-time">' + arg.timeText + '</div>';
+                html += '<div class="fc-event-title-container">';
+                html += '<div class="fc-event-title fc-sticky">';
+                html += arg.event.extendedProps.student + '<br>';
+                html += '<small>' + arg.event.extendedProps.course + '</small>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                return { html: html };
+            }
+        });
+
+        calendar.render();
+    }
+});
 </script>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
