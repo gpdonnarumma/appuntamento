@@ -86,6 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
+            // Force session write before redirect to ensure token is saved
+            session_write_close();
+
             // Redirect to appropriate dashboard
             switch ($userType) {
                 case ROLE_ADMIN:
